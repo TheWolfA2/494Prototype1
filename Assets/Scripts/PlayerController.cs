@@ -5,6 +5,8 @@ public class PlayerController : MonoBehaviour {
 
 	public GameObject V_Portal;
 	public GameObject H_Portal;
+	public float currentTimeout = 0f;
+	public float portalTimeout = 3f;
 
 	public float walkSpeed = 10f;
 	public float jumpSpeed = 8f;
@@ -13,16 +15,22 @@ public class PlayerController : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 	}
-	
+
+	void FixedUpdate() {
+		if (currentTimeout < portalTimeout) {
+			currentTimeout += Time.deltaTime;
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 		Walk(Input.GetAxis("Horizontal"));
 		Jump(Input.GetAxis("Vertical") > 0);
 		if (Input.GetButton("Fire1")) {
-			SummonVPortal();
+			SummonPortal(true);
 		}
 		if (Input.GetButton("Fire2")) {
-			SummonHPortal();
+			SummonPortal(false);
 		}
 	}
 
@@ -32,8 +40,8 @@ public class PlayerController : MonoBehaviour {
 		transform.rigidbody.velocity = newVel;
 	}
 	
-	void Jump(bool isJumping) {
-		if (!isJumping) {
+	void Jump(bool jump) {
+		if (!jump) {
 			return;
 		}
 		Vector2 newVel = transform.rigidbody.velocity;
@@ -41,14 +49,29 @@ public class PlayerController : MonoBehaviour {
 		transform.rigidbody.velocity = newVel;
 	}
 
-	void SummonVPortal() {
-		Instantiate(V_Portal);
-	}
+	void SummonPortal(bool isVertical) {
+		if (currentTimeout >= portalTimeout) {
+			// Reset timer
+			currentTimeout = 0;
 
-	void SummonHPortal() {
-		Instantiate(H_Portal);
-	}
+			// Spawn at the mouse's location
+			Vector3 portalLocation = Input.mousePosition;
+			portalLocation = Camera.main.ScreenToWorldPoint(portalLocation);
+			portalLocation.z = transform.position.z; // line up with player
 
+			if (isVertical) {
+				SummonVPortal(portalLocation);
+			} else {
+				SummonHPortal(portalLocation);
+			}
+		}
+	}
+	void SummonVPortal(Vector3 loc) {
+		Instantiate(V_Portal, loc, new Quaternion());
+	}
+	void SummonHPortal(Vector3 loc) {
+		Instantiate(H_Portal, loc, new Quaternion());
+	}
 
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "PortalEntrance") {
