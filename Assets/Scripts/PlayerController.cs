@@ -27,9 +27,6 @@ public class PlayerController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetButtonDown("Restart")) {
-			Application.LoadLevel(Application.loadedLevel);
-		}
 		Walk(Input.GetAxis("Horizontal"));
 		//Jump(Input.GetAxis("Vertical") > 0);
 		if (Input.GetButton("Fire1")) {
