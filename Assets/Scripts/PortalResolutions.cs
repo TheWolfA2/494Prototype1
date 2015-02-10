@@ -25,11 +25,6 @@ public class PortalResolutions : MonoBehaviour {
 	void OnTriggerEnter(Collider other) {
 		if (other.tag == "PortalEntrance") {
 //			print ("Portal entered!");
-			Portal p = other.GetComponent<Portal>();
-			p.doneMoving = false;
-			ResolvePortalCollision(other);
-			p.doneMoving = true;
-		} else if (other.tag == "PortalExit") {
 			ResolvePortalCollision(other);
 		}
 	}
