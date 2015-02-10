@@ -3,8 +3,6 @@ using System.Collections;
 
 public class LevelDoor : MonoBehaviour {
 
-	public string nextLevel = "";
-
 	// Use this for initialization
 	void Start () {
 	
@@ -16,10 +14,11 @@ public class LevelDoor : MonoBehaviour {
 	}
 
 	public void Open() {
-		if (nextLevel == "") {
-			print("No level to go to!");
-		} else {
-			Application.LoadLevel(nextLevel);
+		int nextLevel = Application.loadedLevel + 1;
+		if (nextLevel == Application.levelCount) {
+			nextLevel = 0;
 		}
+
+		Application.LoadLevel(nextLevel);
 	}
 }

@@ -23,7 +23,7 @@ public class PortalResolutions : MonoBehaviour {
 	}
 
 	void OnTriggerEnter(Collider other) {
-		if (other.tag == "PortalEntrance") {
+		if (other.tag == "PortalEntrance" || other.tag == "PortalExit") {
 //			print ("Portal entered!");
 			ResolvePortalCollision(other);
 		}
