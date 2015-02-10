@@ -49,6 +49,7 @@ public class GameManager : MonoBehaviour {
 		top = Camera.main.WorldToScreenPoint(top);
 		bottom = Camera.main.WorldToScreenPoint(bottom);
 
+		// Only offscreen once ALL sides are offscreen
 		return !(screenRect.Contains(left) || screenRect.Contains(right) ||
 				 screenRect.Contains(top) || screenRect.Contains(bottom));
 	}
