@@ -7,13 +7,19 @@ public abstract class Portal : MonoBehaviour {
 	public float positionOffset = 10f;
 	public float currentTime = 0f;
 	public float lifeTime = 5f; // in seconds
+	public Color color;
 
 	// Use this for initialization
 	protected virtual void Start () {
 		if (!GameManager.CurrentPortals.Contains(this)) {
 			GameManager.CurrentPortals.Add(this);
 		}
+
 		SpawnExit();
+
+		Random.seed = System.DateTime.Now.Millisecond;
+		color = new Color(Random.value, Random.value, Random.value, Random.Range(0.1f, 0.75f));
+		ExitDoor.renderer.material.color = gameObject.renderer.material.color = color;
 	}
 	
 	// Update is called once per frame
