@@ -8,6 +8,8 @@ public abstract class Portal : MonoBehaviour {
 	public float currentTime = 0f;
 	public float lifeTime = 5f; // in seconds
 	public Color color;
+	public bool doneSpawning = false;
+	public bool doneMoving = true;
 
 	// Use this for initialization
 	protected virtual void Start () {
@@ -15,7 +17,9 @@ public abstract class Portal : MonoBehaviour {
 			GameManager.CurrentPortals.Add(this);
 		}
 
+		doneSpawning = false;
 		SpawnExit();
+		doneSpawning = true;
 
 		Random.seed = System.DateTime.Now.Millisecond;
 		color = new Color(Random.value, Random.value, Random.value, Random.Range(0.1f, 0.75f));
@@ -36,6 +40,7 @@ public abstract class Portal : MonoBehaviour {
 	}
 
 	public virtual void EnterPortal(GameObject obj) {
+		while (!doneMoving) {}
 		obj.transform.position = ExitDoor.transform.position;
 		ClosePortals();
 	}

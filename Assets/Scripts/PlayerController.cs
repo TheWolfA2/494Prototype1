@@ -112,6 +112,7 @@ public class PlayerController : MonoBehaviour {
 	void Teleport(Portal p) {
 		p.EnterPortal(gameObject);
 
+		currentTimeout = portalTimeout;
 		// Clear any movement player was experiencing before entering portal
 		Vector3 newVel = transform.rigidbody.velocity;
 		newVel.x = newVel.y = 0;
