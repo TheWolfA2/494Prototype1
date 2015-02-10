@@ -83,6 +83,9 @@ public class PlayerController : MonoBehaviour {
 			portalLocation = Camera.main.ScreenToWorldPoint(portalLocation);
 			portalLocation.z = transform.position.z; // line up with player
 
+			if (GameManager.MaxPortalsAlive()) {
+				GameManager.CloseEarliestPortal();
+			}
 			if (isVertical) {
 				SummonVPortal(portalLocation);
 			} else {

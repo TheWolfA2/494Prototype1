@@ -10,6 +10,9 @@ public abstract class Portal : MonoBehaviour {
 
 	// Use this for initialization
 	protected virtual void Start () {
+		if (!GameManager.CurrentPortals.Contains(this)) {
+			GameManager.CurrentPortals.Add(this);
+		}
 		SpawnExit();
 	}
 	
@@ -20,7 +23,8 @@ public abstract class Portal : MonoBehaviour {
 
 	protected abstract void SpawnExit();
 
-	protected virtual void ClosePortals() {
+	public virtual void ClosePortals() {
+		GameManager.CurrentPortals.Remove(this);
 		Destroy(ExitDoor);
 		Destroy(gameObject);
 	}
