@@ -29,11 +29,10 @@ public class PlayerController : MonoBehaviour {
 	void Update () {
 		Walk(Input.GetAxis("Horizontal"));
 		//Jump(Input.GetAxis("Vertical") > 0);
-		if (Input.GetButton("Fire1")) {
-			SummonPortal(true);
-		}
-		if (Input.GetButton("Fire2")) {
+		if (Input.GetMouseButtonDown(1)) {
 			SummonPortal(false);
+		} else if (Input.GetMouseButtonDown(0)) {
+			SummonPortal(true);
 		}
 		CheckForWall();
 	}
@@ -104,7 +103,6 @@ public class PlayerController : MonoBehaviour {
 		if (other.tag == "PortalEntrance") {
 			Teleport(other.GetComponent<Portal>());
 		} else if (other.tag == "Door") {
-//			print ("Entered a door!");
 			EnterDoor(other.GetComponent<LevelDoor>());
 		}
 	}
